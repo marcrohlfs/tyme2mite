@@ -1,0 +1,19 @@
+### Files to be ignored by Git ###
+
+# IntelliJ IDEA
+/\.idea/
+/*\.ipr
+/*\.iws
+**/*\.iml
+
+# Eclipse
+/\.classpath
+/\.project
+/\.settings/
+
+# Mac
+**/\.DS_Store
+
+# Custom
+/temp/
+/tmp/
