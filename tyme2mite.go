@@ -165,10 +165,12 @@ func main() {
 
         var projectId int
         customerProject := strings.Split(each[1], "|")
-        customer := strings.TrimSpace(customerProject[0])
-        project := strings.TrimSpace(customerProject[1])
+        customerTyme := strings.TrimSpace(customerProject[0])
+        projectTyme := strings.TrimSpace(customerProject[1])
         for idx := 0; idx < len(projects.Project); idx++ {
-            if customer == projects.Project[idx].CustomerName && project == projects.Project[idx].Name {
+            projectMite := strings.TrimSpace(projects.Project[idx].Name)
+            customerMite := strings.TrimSpace(projects.Project[idx].CustomerName)
+            if customerTyme == customerMite && projectTyme == projectMite {
                 projectId = projects.Project[idx].Id
                 break
             }
