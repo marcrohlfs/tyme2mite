@@ -37,7 +37,6 @@ import (
 )
 
 const TMP_TYME_EXPORT_CSV_FILE_NAME = "tmp-tyme-export.csv"
-const TMP_TYME_EXPORT_CSV_FILE_PATH = "/Users/rohlfs/Downloads/" + TMP_TYME_EXPORT_CSV_FILE_NAME
 
 type TimeEntry struct {
     XMLName   xml.Name `xml:"time-entry"`
@@ -127,11 +126,12 @@ func main() {
         "save export ex")
     checkErr(err)
 
-    csvfile, err := os.Open(TMP_TYME_EXPORT_CSV_FILE_PATH)
+    tmpTymeExportCsvFilePath := os.Getenv("HOME") + "/Downloads/" + TMP_TYME_EXPORT_CSV_FILE_NAME
+    csvfile, err := os.Open(tmpTymeExportCsvFilePath)
     checkErr(err)
 
     defer csvfile.Close()
-    os.Remove(TMP_TYME_EXPORT_CSV_FILE_PATH)
+    os.Remove(tmpTymeExportCsvFilePath)
 
     csvReader := csv.NewReader(csvfile)
     checkErr(err)
