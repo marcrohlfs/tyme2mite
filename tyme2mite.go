@@ -37,7 +37,6 @@ import (
 )
 
 const TMP_TYME_EXPORT_CSV_FILE_NAME = "tmp-tyme-export.csv"
-const TMP_TYME_EXPORT_CSV_FILE_PATH = "/Users/rohlfs/Downloads/" + TMP_TYME_EXPORT_CSV_FILE_NAME
 
 type TimeEntry struct {
     XMLName   xml.Name `xml:"time-entry"`
@@ -127,11 +126,12 @@ func main() {
         "save export ex")
     checkErr(err)
 
-    csvfile, err := os.Open(TMP_TYME_EXPORT_CSV_FILE_PATH)
+    tmpTymeExportCsvFilePath := os.Getenv("HOME") + "/Downloads/" + TMP_TYME_EXPORT_CSV_FILE_NAME
+    csvfile, err := os.Open(tmpTymeExportCsvFilePath)
     checkErr(err)
 
     defer csvfile.Close()
-    os.Remove(TMP_TYME_EXPORT_CSV_FILE_PATH)
+    os.Remove(tmpTymeExportCsvFilePath)
 
     csvReader := csv.NewReader(csvfile)
     checkErr(err)
@@ -165,10 +165,12 @@ func main() {
 
         var projectId int
         customerProject := strings.Split(each[1], "|")
-        customer := strings.TrimSpace(customerProject[0])
-        project := strings.TrimSpace(customerProject[1])
+        customerTyme := strings.TrimSpace(customerProject[0])
+        projectTyme := strings.TrimSpace(customerProject[1])
         for idx := 0; idx < len(projects.Project); idx++ {
-            if customer == projects.Project[idx].CustomerName && project == projects.Project[idx].Name {
+            projectMite := strings.TrimSpace(projects.Project[idx].Name)
+            customerMite := strings.TrimSpace(projects.Project[idx].CustomerName)
+            if customerTyme == customerMite && projectTyme == projectMite {
                 projectId = projects.Project[idx].Id
                 break
             }
