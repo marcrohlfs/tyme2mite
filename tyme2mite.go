@@ -156,23 +156,30 @@ func main() {
 
         date := each[0]
 
+        var minutes int
         duration := strings.Split(each[6], ":")
-        hours, err := strconv.Atoi(duration[0])
-        checkErr(err)
-        minutes, err := strconv.Atoi(duration[1])
-        checkErr(err)
-        minutes = hours * 60 + minutes
+        if (len(duration) > 1) {
+            hours, err := strconv.Atoi(duration[0])
+            checkErr(err)
+            minutes, err = strconv.Atoi(duration[1])
+            checkErr(err)
+            minutes = hours * 60 + minutes
+        } else if (strings.HasSuffix(duration[0], "s")) {
+            minutes = 0
+        }
 
         var projectId int
         customerProject := strings.Split(each[1], "|")
-        customerTyme := strings.TrimSpace(customerProject[0])
-        projectTyme := strings.TrimSpace(customerProject[1])
-        for idx := 0; idx < len(projects.Project); idx++ {
-            projectMite := strings.TrimSpace(projects.Project[idx].Name)
-            customerMite := strings.TrimSpace(projects.Project[idx].CustomerName)
-            if customerTyme == customerMite && projectTyme == projectMite {
-                projectId = projects.Project[idx].Id
-                break
+        if len(customerProject) > 1 {
+            customerTyme := strings.TrimSpace(customerProject[0])
+            projectTyme := strings.TrimSpace(customerProject[1])
+            for idx := 0; idx < len(projects.Project); idx++ {
+                projectMite := strings.TrimSpace(projects.Project[idx].Name)
+                customerMite := strings.TrimSpace(projects.Project[idx].CustomerName)
+                if customerTyme == customerMite && projectTyme == projectMite {
+                    projectId = projects.Project[idx].Id
+                    break
+                }
             }
         }
 
